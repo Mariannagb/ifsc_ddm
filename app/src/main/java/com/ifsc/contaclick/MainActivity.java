@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity
 implements View.OnClickListener {
     TextView textView;
     Button button;
-    int contador = 0;2
+    int contador = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
