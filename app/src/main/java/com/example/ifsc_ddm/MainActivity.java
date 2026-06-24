@@ -1,48 +1,50 @@
 package com.example.ifsc_ddm;
 
-import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView textView;
-    Button button, btnreset, btnVoltar;
-    int c = 0;
+    Button buttonFragmentA, buttonFragmentB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.tv);
-        button = findViewById(R.id.button);
-        btnreset = findViewById(R.id.btnreset);
-        btnVoltar = findViewById(R.id.btnVoltar);
+        buttonFragmentA = findViewById(R.id.buttonFragmentA);
+        buttonFragmentB = findViewById(R.id.buttonFragmentB);
 
-        textView.setText("0");
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = null;
 
-        button.setOnClickListener(v -> {
-            c++;
-            textView.setText(Integer.toString(c));
-        });
+                int id = v.getId();
+                if (id == R.id.buttonFragmentA) {
+                    fragment = new FragmentA();
+                } else if (id == R.id.buttonFragmentB) {
+                    fragment = new FragmentB();
+                }
 
-        btnreset.setOnClickListener(v -> {
-            textView.setText("0");
-            c = 0;
-        });
+                if (fragment != null) {
+                    abreFragmento(fragment);
+                }
+            }
+        };
 
-        btnVoltar.setOnClickListener(v -> {
-            finish();
-        });
+        buttonFragmentA.setOnClickListener(onClickListener);
+        buttonFragmentB.setOnClickListener(onClickListener);
+    }
+
+    public void abreFragmento(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.commit();
     }
 }
