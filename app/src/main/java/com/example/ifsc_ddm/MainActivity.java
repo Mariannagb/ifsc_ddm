@@ -1,43 +1,64 @@
 package com.example.ifsc_ddm;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
-public class MainActivity extends Activity {
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import java.util.Random;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView textViewResult;
+    EditText editTextMin, editTextMax;
     Button button;
-    EditText altura;
-    EditText peso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         button = findViewById(R.id.button);
-        altura = findViewById(R.id.altura);
-        peso = findViewById(R.id.peso);
+        editTextMin = findViewById(R.id.edMin);
+        editTextMax = findViewById(R.id.edMax);
+        textViewResult = findViewById(R.id.tvResult);
 
-        button.setOnClickListener(v -> {
-            try {
-                String stringPeso = peso.getText().toString().replace(",", ".");
-                String stringAltura = altura.getText().toString().replace(",", ".");
+        button.setOnClickListener((v) -> {
+            int min = Integer.parseInt(editTextMin.getText().toString());
+            int max = Integer.parseInt(editTextMax.getText().toString());
+            int sorteado = 0;
+            Random random = new Random();
+            sorteado = (int) (Math.random() * (max - min) + min);
 
-                float valorPeso = Float.parseFloat(stringPeso);
-                float valorAltura = Float.parseFloat(stringAltura);
-
-                float imc = valorPeso / (valorAltura * valorAltura);
-
-                Intent i = new Intent(getApplicationContext(), IMC.class);
-                i.putExtra("msg", imc);
-                startActivity(i);
-
-            } catch (NumberFormatException e) {
-                Toast.makeText(this, "Preencha o peso e a altura corretamente", Toast.LENGTH_SHORT).show();
-            }
+            textViewResult.setText(Integer.toString(sorteado));
         });
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("sorteado", textViewResult.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            textViewResult.setText(savedInstanceState.getString("sorteado"));
+        }
     }
 }
