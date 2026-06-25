@@ -7,13 +7,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 
 public class FragmentA extends Fragment {
     TextView textView ;
@@ -28,25 +25,24 @@ public class FragmentA extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return super.onCreateView(inflater, container, savedInstanceState);
-        View v= inflater.inflate(R.layout.fragment_a,container,false);
+        View v = inflater.inflate(R.layout.fragment_a, container, false);
+
         textView = v.findViewById(R.id.tvMsg);
-        buttonSendMsg=v.findViewById(R.id.buttonSendMSg);
+        buttonSendMsg = v.findViewById(R.id.buttonSendMSg);
         editText = v.findViewById(R.id.edMsg);
 
         buttonSendMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentB  fragmentB =new FragmentB();
+                FragmentB fragmentB = new FragmentB();
 
-                Bundle b = new Bundle( );
+                Bundle b = new Bundle();
                 b.putString("msg", editText.getText().toString());
                 fragmentB.setArguments(b);
 
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayout,fragmentB);
+                transaction.replace(R.id.frameLayout, fragmentB);
                 transaction.commit();
-
             }
         });
 
@@ -56,7 +52,7 @@ public class FragmentA extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if ( getArguments()!=null && getArguments().containsKey("msg")) {
+        if (getArguments() != null && getArguments().containsKey("msg")) {
             this.textView.setText(getArguments().getString("msg"));
         }
     }

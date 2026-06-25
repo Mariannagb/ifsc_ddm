@@ -3,7 +3,6 @@ package com.example.ifsc_ddm;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         buttonFragmentA.setOnClickListener(onClickListener);
         buttonFragmentB.setOnClickListener(onClickListener);
+
+        if (savedInstanceState == null) {
+            abreFragmento(new FragmentA());
+        }
     }
 
     public void abreFragmento(Fragment fragment){
