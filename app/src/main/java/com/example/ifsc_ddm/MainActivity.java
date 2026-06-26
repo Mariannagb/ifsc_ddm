@@ -1,48 +1,62 @@
 package com.example.ifsc_ddm;
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView textView;
-    Button button, btnreset, btnVoltar;
-    int c = 0;
+    private ControllerSQL controladorNotas;
+    private EditText campoTextoNota;
+    private ListView listaExibicaoNotas;
+    private Button botaoSalvar, botaoLimpar, botaoVoltar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.tv);
-        button = findViewById(R.id.button);
-        btnreset = findViewById(R.id.btnreset);
-        btnVoltar = findViewById(R.id.btnVoltar);
+        inicializarComponentes();
+        configurarAcoesDosBotoes();
+        atualizarListaNaTela();
+    }
 
-        textView.setText("0");
+    private void inicializarComponentes() {
+        controladorNotas = new ControllerSQL(this);
 
-        button.setOnClickListener(v -> {
-            c++;
-            textView.setText(Integer.toString(c));
+        campoTextoNota = findViewById(R.id.edNota);
+        listaExibicaoNotas = findViewById(R.id.lvNotas);
+        botaoSalvar = findViewById(R.id.btnSalvar);
+        botaoLimpar = findViewById(R.id.btnLimpar);
+        botaoVoltar = findViewById(R.id.btnVoltar);
+    }
+
+    private void configurarAcoesDosBotoes() {
+        botaoSalvar.setOnClickListener(view -> {
+            String textoDigitado = campoTextoNota.getText().toString();
+            controladorNotas.salvarNota(textoDigitado);
+            campoTextoNota.setText("");
+            atualizarListaNaTela();
         });
 
-        btnreset.setOnClickListener(v -> {
-            textView.setText("0");
-            c = 0;
+        botaoLimpar.setOnClickListener(view -> {
+            controladorNotas.limparNotas();
+            atualizarListaNaTela();
         });
 
-        btnVoltar.setOnClickListener(v -> {
-            finish();
-        });
+        botaoVoltar.setOnClickListener(view -> finish());
+    }
+
+    private void atualizarListaNaTela() {
+        ArrayAdapter<String> adaptador = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                controladorNotas.listarTitulos()
+        );
+        listaExibicaoNotas.setAdapter(adaptador);
     }
 }

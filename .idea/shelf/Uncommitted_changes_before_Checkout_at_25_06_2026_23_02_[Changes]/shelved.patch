@@ -1,0 +1,19 @@
+Index: app/src/main/java/com/example/ifsc_ddm/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.ifsc_ddm;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.os.Bundle;\r\nimport android.widget.Button;\r\nimport android.widget.ImageView;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    Button buttonAvancar, buttonVoltar, buttonMenu;\r\n    ImageView imageView;\r\n    int imagens[] = new int[]{R.drawable.cachorro,\r\n            R.drawable.gardem,\r\n            R.drawable.happy,\r\n            R.drawable.patinho,\r\n            R.drawable.porquinho};\r\n\r\n    int posicao = 0;\r\n\r\n    @SuppressLint(\"MissingInflatedId\")\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n\r\n        buttonAvancar = findViewById(R.id.btnAvancar);\r\n        buttonVoltar = findViewById(R.id.btnVoltar);\r\n        buttonMenu = findViewById(R.id.btnMenu);\r\n        imageView = findViewById(R.id.imageView);\r\n\r\n        buttonAvancar.setOnClickListener(v -> {\r\n            posicao++;\r\n            if (posicao >= imagens.length) {\r\n                posicao = 0;\r\n            }\r\n            imageView.setImageResource(imagens[posicao]);\r\n        });\r\n\r\n        buttonVoltar.setOnClickListener(v -> {\r\n            posicao--;\r\n            if (posicao < 0) {\r\n                posicao = imagens.length - 1;\r\n            }\r\n            imageView.setImageResource(imagens[posicao]);\r\n        });\r\n\r\n        buttonMenu.setOnClickListener(v -> {\r\n            finish();\r\n        });\r\n    }\r\n\r\n    @Override\r\n    protected void onResume() {\r\n        super.onResume();\r\n        posicao = 0;\r\n        imageView.setImageResource(imagens[0]);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/ifsc_ddm/MainActivity.java b/app/src/main/java/com/example/ifsc_ddm/MainActivity.java
+--- a/app/src/main/java/com/example/ifsc_ddm/MainActivity.java	(revision 3cd6322dcf9810090909dd63a08091ff30de1810)
++++ b/app/src/main/java/com/example/ifsc_ddm/MainActivity.java	(date 1782439331315)
+@@ -23,7 +23,7 @@
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+-        setContentView(R.layout.activity_main);
++        setContentView(R.layout.activity_slide);
+ 
+         buttonAvancar = findViewById(R.id.btnAvancar);
+         buttonVoltar = findViewById(R.id.btnVoltar);
