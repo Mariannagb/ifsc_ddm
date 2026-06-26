@@ -1,0 +1,29 @@
+Index: app/src/main/java/com/example/ifsc_ddm/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.ifsc_ddm;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.fragment.app.FragmentTransaction;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    Button buttonFragmentA, buttonFragmentB;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n\r\n        buttonFragmentA = findViewById(R.id.buttonFragmentA);\r\n        buttonFragmentB = findViewById(R.id.buttonFragmentB);\r\n\r\n        View.OnClickListener onClickListener = new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Fragment fragment = null;\r\n\r\n                int id = v.getId();\r\n                if (id == R.id.buttonFragmentA) {\r\n                    fragment = new FragmentA();\r\n                } else if (id == R.id.buttonFragmentB) {\r\n                    fragment = new FragmentB();\r\n                }\r\n\r\n                if (fragment != null) {\r\n                    abreFragmento(fragment);\r\n                }\r\n            }\r\n        };\r\n\r\n        buttonFragmentA.setOnClickListener(onClickListener);\r\n        buttonFragmentB.setOnClickListener(onClickListener);\r\n\r\n        if (savedInstanceState == null) {\r\n            abreFragmento(new FragmentA());\r\n        }\r\n    }\r\n\r\n    public void abreFragmento(Fragment fragment){\r\n        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();\r\n        transaction.replace(R.id.frameLayout, fragment);\r\n        transaction.commit();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/ifsc_ddm/MainActivity.java b/app/src/main/java/com/example/ifsc_ddm/MainActivity.java
+--- a/app/src/main/java/com/example/ifsc_ddm/MainActivity.java	(revision fbe9ff273249ceb14cdc4f6bb34191f6ebdc2a3a)
++++ b/app/src/main/java/com/example/ifsc_ddm/MainActivity.java	(date 1782432099289)
+@@ -3,6 +3,7 @@
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.fragment.app.Fragment;
+ import androidx.fragment.app.FragmentTransaction;
++
+ import android.os.Bundle;
+ import android.view.View;
+ import android.widget.Button;
+@@ -39,10 +40,6 @@
+ 
+         buttonFragmentA.setOnClickListener(onClickListener);
+         buttonFragmentB.setOnClickListener(onClickListener);
+-
+-        if (savedInstanceState == null) {
+-            abreFragmento(new FragmentA());
+-        }
+     }
+ 
+     public void abreFragmento(Fragment fragment){
